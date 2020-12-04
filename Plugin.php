@@ -942,10 +942,24 @@ a;
 a;
 				$geetestSet=unserialize(@$get["enableGeetest"]);
 				if($geetestSet&&in_array("reg",$geetestSet)){
+					$versions=explode("/",Typecho_Widget::widget('Widget_Options')->Version);
 					$ja.=<<<a
 <script>
-	$(".submit").prepend('<p><div id="embed-captcha"></div></p>');
-	
+a;
+					if($versions[1]>="19.10.20"){
+						$ja.=<<<a
+	$(".am-form-group:last").prepend('<p><center id="embed-captcha"></center></p>');
+a;
+					}else if($versions[1]>="19.10.15"){
+						$ja.=<<<a
+	$(".am-cf").prepend('<p><center id="embed-captcha"></center></p>');
+a;
+					}else{
+						$ja.=<<<a
+	$(".submit").prepend('<p><center id="embed-captcha"></center></p>');
+a;
+					}
+					$ja.=<<<a
 	var handlerEmbed = function (captchaObj) {
         captchaObj.appendTo("#embed-captcha");
 		$("form[name='register']").submit(function(){
